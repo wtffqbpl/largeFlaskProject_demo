@@ -3,7 +3,7 @@
 # Author: Yuanjun Ren
 
 from datetime import datetime
-from flask import render_template, session, redirect, url_for, current_app
+from flask import render_template, session, redirect, url_for, current_app, abort
 
 from . import main
 from .forms import NameForm
@@ -33,3 +33,12 @@ def index():
                            name=session.get("name"),
                            known=session.get("known", False),
                            current_time=datetime.utcnow())
+
+
+@main.route("/user/<username>")
+def user(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        abort(404)
+    return render_template("user.html", user=user)
+

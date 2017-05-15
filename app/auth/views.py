@@ -96,5 +96,3 @@ def before_request():
             and request.endpoint[:5] != "auth.":
             return redirect(url_for("auth.unconfirmed"))
 
-
-
